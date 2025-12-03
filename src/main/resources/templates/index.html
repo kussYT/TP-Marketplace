@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace AMAP</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+        <a class="navbar-brand" href="#">AMAP Marketplace</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <!-- LOGIN -->
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h3 class="text-center">Connexion</h3>
+
+            <form th:action="@{/login}" method="post" class="card p-3 shadow-sm">
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input class="form-control" type="text" name="email">
+                </div>
+
+                <div class="mb-3">
+                    <label>Mot de passe</label>
+                    <input class="form-control" type="password" name="password">
+                </div>
+
+                <button class="btn btn-success w-100" type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- PRODUITS -->
+    <h2 class="mb-4 text-center">Produits disponibles</h2>
+
+    <div th:if="${produits != null}" class="row">
+        <div class="col-md-4 mb-4" th:each="p : ${produits}">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${p.nom}">Nom produit</h5>
+                    <p class="card-text">
+                        Producteur : <span th:text="${p.producteur}">Prod</span><br>
+                        Prix : <span th:text="${p.prix}">0</span> €
+                    </p>
+
+                    <form th:action="@{/panier/add}" method="post">
+                        <input type="hidden" name="idProduit" th:value="${p.id}">
+                        <button type="submit" class="btn btn-outline-success w-100">
+                            Ajouter au panier
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p th:if="${produits == null}" class="text-center text-muted">
+        Aucun produit pour le moment.
+    </p>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
