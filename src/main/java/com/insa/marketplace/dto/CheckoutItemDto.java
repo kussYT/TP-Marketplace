@@ -1,18 +1,16 @@
 package com.insa.marketplace.dto;
 
-public class OrderItemDto {
+public class CheckoutItemDto {
 
     private String productId;
     private int quantity;
-    private double price;
 
-    public OrderItemDto() {
+    public CheckoutItemDto() {
     }
 
-    public OrderItemDto(String productId, int quantity, double price) {
+    public CheckoutItemDto(String productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;
-        this.price = price;
     }
 
     public String getProductId() {
@@ -29,13 +27,5 @@ public class OrderItemDto {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }
