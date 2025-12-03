@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckoutRequest {
+public class OrderDto {
 
+    private String id;
     private String userId;
-    private List<CheckoutItemDto> items;
+    private String producerId;
+    private LocalDateTime createdAt;
+    private List<OrderItemDto> items;
 }

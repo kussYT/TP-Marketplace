@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckoutRequest {
+public class CheckoutItemDto {
 
-    private String userId;
-    private List<CheckoutItemDto> items;
+    private String productId;
+    private int quantity;
 }
