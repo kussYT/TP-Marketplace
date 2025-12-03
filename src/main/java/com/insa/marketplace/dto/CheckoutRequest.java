@@ -1,23 +1,16 @@
 package com.insa.marketplace.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CheckoutRequest {
 
+    private String userId;
     private List<CheckoutItemDto> items;
-
-    public CheckoutRequest() {
-    }
-
-    public CheckoutRequest(List<CheckoutItemDto> items) {
-        this.items = items;
-    }
-
-    public List<CheckoutItemDto> getItems() {
-        return items;
-    }
-
-    public void setItems(List<CheckoutItemDto> items) {
-        this.items = items;
-    }
 }

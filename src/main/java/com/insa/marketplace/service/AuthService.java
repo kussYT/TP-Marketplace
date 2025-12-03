@@ -2,54 +2,47 @@ package com.insa.marketplace.service;
 
 import com.insa.marketplace.dto.LoginRequest;
 import com.insa.marketplace.dto.UserDto;
+import com.insa.marketplace.mapper.UserMapper;
 import com.insa.marketplace.model.User;
 import com.insa.marketplace.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    /**
+     * Login :
+     * - si l'utilisateur existe, on vérifie le mot de passe
+     * - sinon on le crée
+     */
     public UserDto login(LoginRequest request) {
         String username = request.getUsername();
         String password = request.getPassword();
 
-        Optional<User> existing = userRepository.findByUsername(username);
+        Optional<User> existingUser = userRepository.findByUsername(username);
 
-        if (existing.isPresent()) {
-            User user = existing.get();
-
-            // Ici on fait un check très simple
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
             if (user.getPassword() != null && !user.getPassword().equals(password)) {
                 throw new IllegalArgumentException("Invalid credentials");
             }
-
-            return toDto(user);
+            return userMapper.toDto(user);
         }
 
-        // Si l'utilisateur n'existe pas, on le crée
+        // Création d'un nouvel utilisateur si inexistant
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(password);
-        // email facultatif : on peut le laisser null
         newUser.setEmail(null);
 
         User saved = userRepository.save(newUser);
-        return toDto(saved);
-    }
-
-    private UserDto toDto(User user) {
-        return new UserDto(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail()
-        );
+        return userMapper.toDto(saved);
     }
 }
